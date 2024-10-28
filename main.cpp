@@ -1,3 +1,4 @@
+// COMSC-210 | Lab-25 | Jeremiah Ortiz
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -6,11 +7,12 @@
 #include <string>
 #include <vector> 
 #include <iomanip>
+#include <algorithm> 
 
 using namespace std;
 using namespace std::chrono; 
 
-const string FILE = "codes.txt"; 
+const string FILENAME = "codes.txt"; 
 
 void load_data(const string& filename, vector<string>& v, list<string>& l, set<string> s); 
 void preform_op(const vector<string> &v, const list<string> &l, const set<string> &s); 
@@ -19,13 +21,13 @@ void load_data(const string& filename, vector<string>& v, list<string>& l, set<s
 
     fstream file("codes.txt");
 
-    string s; 
+    string sa; 
 
     auto start = high_resolution_clock::now(); 
 
-    while (getline(file, s)) {
+    while (getline(file, sa)) {
 
-        v.push_back(s); 
+        v.push_back(sa); 
     }
 
     auto end = high_resolution_clock::now(); 
@@ -40,9 +42,9 @@ void load_data(const string& filename, vector<string>& v, list<string>& l, set<s
 
     start = high_resolution_clock::now(); 
 
-    while (getline(file, s)) {
+    while (getline(file, sa)) {
 
-        l.push_back(s);
+        l.push_back(sa);
     }
 
     end = high_resolution_clock::now(); 
@@ -57,9 +59,9 @@ void load_data(const string& filename, vector<string>& v, list<string>& l, set<s
 
     start = high_resolution_clock::now(); 
 
-    while (getline(file, s)) {
+    while (getline(file, sa)) {
 
-        s.insert(s);
+        s.insert(sa);
     }
 
     end = high_resolution_clock::now(); 
@@ -73,7 +75,7 @@ void load_data(const string& filename, vector<string>& v, list<string>& l, set<s
 
 void preform_op(const vector<string> &v, const list<string> &l, const set<string> &s) {
 
-    vector<string> v_cop = vec; 
+    vector<string> v_cop = v; 
 
     auto start = high_resolution_clock::now();
 
@@ -85,7 +87,7 @@ void preform_op(const vector<string> &v, const list<string> &l, const set<string
 
     cout << "Sort - Vector: " << vc_duration.count() << "ms\n"; 
 
-    list<string> l_cop = lt;
+    list<string> l_cop = l;
 
     start = high_resolution_clock::now(); 
 
@@ -95,9 +97,9 @@ void preform_op(const vector<string> &v, const list<string> &l, const set<string
 
     auto ls_duration = duration_cast<milliseconds>(end - start); 
 
-    cout << "Sort - List: " << ls_duration.count() >> "ms\n"; 
+    cout << "Sort - List: " << ls_duration.count() << "ms\n"; 
 
-    cout << "Sort - Set: -1 ms (sorted already" << endl; 
+    cout << "Sort - Set: -1 ms" << endl; 
 
     start = high_resolution_clock::now(); 
 
@@ -113,7 +115,7 @@ void preform_op(const vector<string> &v, const list<string> &l, const set<string
 
     auto lc = l_cop.begin(); 
 
-    advance(it, l_cop.size() / 2); 
+    advance(lc, l_cop.size() / 2); 
 
     l_cop.insert(lc, "TESTCODE");
 
@@ -123,7 +125,7 @@ void preform_op(const vector<string> &v, const list<string> &l, const set<string
 
     cout << "Insert - List: " << lc_ins.count() << "ms\n"; 
 
-    set<string> s_cop = st; 
+    set<string> s_cop = s; 
 
     start = high_resolution_clock::now(); 
 
@@ -149,7 +151,7 @@ void preform_op(const vector<string> &v, const list<string> &l, const set<string
 
     lc = l_cop.begin(); 
 
-    advance(lc, l_cop.size() \ 2); 
+    advance(lc, l_cop.size() / 2); 
 
     l_cop.erase(lc);
 
@@ -171,14 +173,17 @@ void preform_op(const vector<string> &v, const list<string> &l, const set<string
 }
 
 int main() {
-    
+
+    vector<string> vs; 
+
+    list<string> ls; 
+
+    set<string> ss; 
+
+    load_data(FILENAME, vs, ls, ss); 
+
+    preform_op(vs, ls, ss); 
 
     return 0;
 }
 
-/* syntax examples:
-auto start = high_resolution_clock::now()
-auto end = high_resolution_clock::now()
-auto duration = duration_cast<milliseconds>(end - start)
-duration.count() references elapsed milliseconds
-*/
