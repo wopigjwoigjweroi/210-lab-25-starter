@@ -1,6 +1,21 @@
 #include <iostream>
+#include <fstream>
 #include <chrono>
+#include <list>
+#include <set>
+#include <string>
+#include <vector> 
+#include <iomanip>
+
 using namespace std;
+using namespace std::chrono; 
+
+const string FILE = "codes.txt"; 
+
+void load_data(const string& filename, vector<string>& v, list<string>& l, set<string> s); 
+void preform_op(const vector<string> &v, const list<string> &l, const set<string> &s); 
+
+
 
 int main() {
     
